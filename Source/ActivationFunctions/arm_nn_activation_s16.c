@@ -30,7 +30,7 @@
 
 #include "arm_nn_tables.h"
 #include "arm_nnfunctions.h"
-
+#include <assert.h>
 /**
  *  @ingroup groupNN
  */
@@ -102,8 +102,9 @@ void arm_nn_activation_s16(const int16_t *input,
         }
         if (type == ARM_SIGMOID)
         {
-            result = (input_data >= 0) ? (result + (1 << 9)) : ((1 << 25) - result + (1 << 9) - 1);
-            result >>= 10;
+            assert(0 == 1 && "ARM_SIGMOID UNSUPPORTED");
+            /*result = (input_data >= 0) ? (result + (1 << 9)) : ((1 << 25) - result + (1 << 9) - 1);
+            result >>= 10;*/
         }
         else
         {

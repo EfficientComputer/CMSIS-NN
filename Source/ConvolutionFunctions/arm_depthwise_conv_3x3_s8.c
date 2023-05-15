@@ -32,6 +32,10 @@
 #include "arm_nnfunctions.h"
 #include "arm_nnsupportfunctions.h"
 
+void bias_helper(const int32_t **bias,const int32_t *bias_base){
+   *bias = bias_base;
+}
+
 /**
  *  @ingroup Public
  */
@@ -61,8 +65,8 @@ arm_cmsis_nn_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
                                               const cmsis_nn_dims *output_dims,
                                               int8_t *output)
 {
-    (void)ctx;
-    (void)bias_dims;
+    //(void)ctx;
+    //(void)bias_dims;
 
     const int32_t input_x = input_dims->w;
     const int32_t input_y = input_dims->h;
@@ -99,7 +103,7 @@ arm_cmsis_nn_status arm_depthwise_conv_3x3_s8(const cmsis_nn_context *ctx,
             int32_t in_ch = 0;
             int32_t ker_w_start = MAX(0, -in_w);
 
-            bias = bias_base;
+            bias_helper(&bias, bias_base);
             for (; in_ch <= (input_ch - 4); in_ch += 4)
             {
                 int32_t out_buff0 = 0;

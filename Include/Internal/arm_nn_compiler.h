@@ -30,6 +30,7 @@
 #ifndef ARM_NN_COMPILER_H
 #define ARM_NN_COMPILER_H
 
+#include <stdint.h>
 /**
  *
  * @brief Arm C-Language Extension(ACLE) Includes

@@ -177,7 +177,7 @@ static void depthwise_conv_s16_generic_s16(const int16_t *input,
                         int ker_y_end;
                         int ker_x_end;
 
-                        if (dilation_x > 1)
+                        if (__ident(dilation_x) > 1)
                         {
                             const int32_t start_x_max = (-base_idx_x + dilation_x - 1) / dilation_x;
                             ker_x_start = MAX(0, start_x_max);
@@ -190,7 +190,7 @@ static void depthwise_conv_s16_generic_s16(const int16_t *input,
                             ker_x_end = MIN(kernel_x, input_x - base_idx_x);
                         }
 
-                        if (dilation_y > 1)
+                        if (__ident(dilation_y) > 1)
                         {
                             const int32_t start_y_max = (-base_idx_y + dilation_y - 1) / dilation_y;
                             ker_y_start = MAX(0, start_y_max);

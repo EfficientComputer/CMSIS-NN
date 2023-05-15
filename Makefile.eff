@@ -1,0 +1,14 @@
+RIPPER ?= ../riptools/build/bin/ripper
+RIPPERFLAGS += -S --emit-rip
+CFLAGS = -I Include
+
+SRC := $(shell find Source/ -iname "*.c")
+RIP =  $(patsubst %.c,%.rip.mlir,$(SRC))
+
+%.rip.mlir: %.c
+	$(RIPPER) $(CFLAGS) $(RIPPERFLAGS) $^ -o $@
+
+all: $(RIP)
+
+clean:
+	-rm $(RIP)

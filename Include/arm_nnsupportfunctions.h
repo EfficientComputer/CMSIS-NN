@@ -798,6 +798,16 @@ void arm_nn_softmax_common_s8(const int8_t *input,
 #define EXP_ON_NEG(x) arm_nn_exp_on_negative_values((x))
 #define ONE_OVER1(x) arm_nn_one_over_one_plus_x_for_x_in_0_1((x))
 
+uint16_t __ident(uint16_t d){
+  return d;
+}
+uint16_t __ident16(uint16_t d){
+  return d;
+}
+uint32_t __ident32(uint32_t d){
+  return d;
+}
+
 /**
  * @brief           Saturating doubling high multiply. Result matches
  *                  NEON instruction VQRDMULH.
@@ -1111,8 +1121,13 @@ __STATIC_FORCEINLINE int32_t arm_nn_mult_by_power_of_two(const int32_t val, cons
 {
     const int32_t thresh = ((1 << (31 - exp)) - 1);
     int32_t result = val << exp;
-    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val > thresh), NN_Q31_MAX, result);
-    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(val < -thresh), NN_Q31_MIN, result);
+
+    int32_t pos_cmp = 0;
+    int32_t neg_cmp = 0;
+    if(val > thresh){ pos_cmp = 1; }
+    if(val < -thresh){ neg_cmp = 1; }
+    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(pos_cmp), NN_Q31_MAX, result);
+    result = SELECT_USING_MASK(MASK_IF_NON_ZERO(neg_cmp), NN_Q31_MIN, result);
     return result;
 }
 

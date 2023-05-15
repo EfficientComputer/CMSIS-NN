@@ -123,7 +123,7 @@ arm_cmsis_nn_status arm_convolve_s8(const cmsis_nn_context *ctx,
                         const int32_t k_y = base_idx_y + dilation_y * i_ker_y;
                         const int32_t k_x = base_idx_x + dilation_x * i_ker_x;
 
-                        if (k_y < 0 || k_y >= input_y || k_x < 0 || k_x >= input_x)
+                        if (k_y < 0 || k_y >= input_dims->h || k_x < 0 || k_x >= input_dims->w)
                         {
                             arm_memset_s8(im2col_buf, (int8_t)-input_offset, sizeof(int8_t) * input_ch);
                         }
